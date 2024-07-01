@@ -34,7 +34,7 @@ pdf_file_path = "Branden.pdf"
 with st.spinner("Extracting text from PDF..."):
     pdf_text = extract_text_from_pdf(pdf_file_path)
 
-st.success("PDF text extracted successfully!")
+st.success("App loaded successfully!")
 
 # Streamlit app
 st.title("Ask Branden")

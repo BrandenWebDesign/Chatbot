@@ -40,7 +40,7 @@ with st.spinner("Extracting text from PDF..."):
 st.success("App loaded successfully!")
 
 # Streamlit app
-st.title("Ask Branden")
+st.title("Ask Branden's AI Assistant")
 
 # Use st.form to handle form submission
 with st.form("question_form"):

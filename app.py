@@ -3,8 +3,11 @@ import fitz  # PyMuPDF
 import os
 from openai import OpenAI
 
+# Retrieve the API key from environment variable or Streamlit secrets
+api_key = os.getenv("OPENAI_API_KEY") or st.secrets["openai_api_key"]
+
 # Instantiate the OpenAI client
-client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+client = OpenAI(api_key=api_key)
 
 # Function to extract text from a PDF file
 def extract_text_from_pdf(pdf_file):

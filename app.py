@@ -44,7 +44,7 @@ st.title("Ask Branden")
 
 # Use st.form to handle form submission
 with st.form("question_form"):
-    user_question = st.text_input("Ask Branden a question about his experience, education, goals, achievments or something else.")
+    user_question = st.text_input("Ask Branden a question about his experience, education, goals, achievements, or something else.")
 
     # Handle form submission with Enter key
     submitted = st.form_submit_button("Get Answer")

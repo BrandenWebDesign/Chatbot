@@ -44,7 +44,7 @@ st.title("Ask Branden's AI Assistant")
 
 # Use st.form to handle form submission
 with st.form("question_form"):
-    user_question = st.text_input("Ask any question about Branden's experience, education, goals, achievements, or something else.")
+    user_question = st.text_input("Ask a question about Branden's experience, education, goals, achievements, or something else.")
 
     # Handle form submission with Enter key
     submitted = st.form_submit_button("Get Answer")

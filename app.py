@@ -50,7 +50,7 @@ def query_openai(prompt):
 pdf_file_path = "Branden.pdf"
 
 # Extract text from the PDF file at startup
-with st.spinner("Loading"):
+with st.spinner("Loading..."):
     pdf_text = extract_text_from_pdf(pdf_file_path)
 
 st.success("App loaded successfully!")

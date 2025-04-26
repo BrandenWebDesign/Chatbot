@@ -77,7 +77,6 @@ o	Hockey: New York Rangers
 o	Basketball: Chicago Bulls
 •	Favorite boxer: Mike Tyson
 
-
 Education
 •	New York University – Tandon School of Engineering
 Integrated Design & Media (MS) | January 2021 – May 2023

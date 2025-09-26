@@ -1,5 +1,6 @@
 import streamlit as st
 import os
+import time
 from openai import OpenAI
 
 # Retrieve the API key from environment variable or Streamlit secrets
@@ -147,7 +148,14 @@ Special System Prompt for the AI App:
 
     """
 
-st.success("App loaded successfully!")
+msg = st.empty()
+for opacity in [1.0, 0.9, 0.8, 0.7, 0.6, 0.5, 0.4, 0.3, 0.2, 0.1]:
+    msg.markdown(
+        f"<div style='color:green; opacity:{opacity}; font-weight:bold;'>✅ App loaded successfully!</div>",
+        unsafe_allow_html=True,
+    )
+    time.sleep(0.3)  # adjust timing for fade speed
+msg.empty()
 
 # Streamlit app
 st.title("Ask Branden")

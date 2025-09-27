@@ -11,6 +11,13 @@ from openai import OpenAI
 api_key = os.getenv("OPENAI_API_KEY") or st.secrets["openai_api_key"]
 client = OpenAI(api_key=api_key)
 
+# Debug: check where the key is coming from
+def _mask(k):
+    return f"{k[:6]}…{k[-4:]}" if k else None
+
+st.write("From secrets:", "openai_api_key" in st.secrets)
+st.write("From env:", _mask(os.getenv("OPENAI_API_KEY")))
+
 # Toggle to show extra debug info in the UI if you want
 SHOW_DEBUG = False
 

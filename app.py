@@ -1,7 +1,5 @@
 import streamlit as st
 import os
-import time, random
-import openai  # needed for catching rate limit errors
 from openai import OpenAI
 
 # Retrieve the API key from environment variable or Streamlit secrets
@@ -11,20 +9,12 @@ api_key = os.getenv("OPENAI_API_KEY") or st.secrets["openai_api_key"]
 client = OpenAI(api_key=api_key)
 
 
-# Function to query the OpenAI API with retries for rate limits
-def query_openai(prompt, max_retries=3):
-    """
-    Calls OpenAI with retries on 429 rate limits.
-    Returns a concise string (never raises on 429).
-    """
-    delays = [0, 1, 2, 4]  # exponential backoff with jitter
-    last_err = None
 
-    for attempt, delay in enumerate(delays[:max_retries + 1]):
-        try:
-            if delay:
-                time.sleep(delay + random.uniform(0, 0.4))  # jitter
-            response = client.chat.completions.create(
+
+
+# Function to query the OpenAI API with a prompt for concise first person responses as Branden
+def query_openai(prompt):
+    response = client.chat.completions.create(
         model="gpt-3.5-turbo",
         messages=[
             {"role": "system",

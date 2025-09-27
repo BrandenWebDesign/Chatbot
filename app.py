@@ -150,43 +150,41 @@ Special System Prompt for the AI App:
 
 
 
-# Streamlit app
 st.title("Ask Branden")
-
 msg = st.empty()
 
+BANNER_STYLE = """
+    margin:0;
+    margin-top:-15px;
+    height:auto;
+    display:flex;
+    align-items:center;
+    font-weight:600;
+    font-size:1rem;
+    font-family: "Source Sans Pro", sans-serif;
+"""
 
-# Use st.form to handle form submission
-with st.form("question_form"):
-    user_question = st.text_input(
-        "Ask about Branden's favorite things, experience, education, achievements, or how to navigate his portfolio.")
-
-    # Handle form submission with Enter key
-    submitted = st.form_submit_button("Get Answer")
-
-    BANNER_STYLE = """
-        margin:0;
-        margin-top:-15px;                /* move banner text up by 10px */
-        height:auto;
-        display:flex;
-        align-items:center;
-        font-weight:600;
-        font-size:1rem;   /* slightly larger, matches Streamlit base font */
-        font-family: "Source Sans Pro", sans-serif;
-    """
-
+# show the banner only once per session
+if "app_loaded" not in st.session_state:
     for opacity in [1.0, 0.9, 0.8, 0.7, 0.6, 0.5, 0.4, 0.3, 0.2, 0.1]:
         msg.markdown(
             f"<div style='color:green; opacity:{opacity}; {BANNER_STYLE}'>✅ App loaded successfully!</div>",
             unsafe_allow_html=True,
         )
-        time.sleep(0.3)  # adjust timing for fade speed
+        time.sleep(0.3)
 
-    # keep height consistent after fade
     msg.markdown(
         f"<div style='opacity:0; {BANNER_STYLE}'>✅ App loaded successfully!</div>",
         unsafe_allow_html=True,
     )
+    st.session_state["app_loaded"] = True
+
+# form still renders right away
+with st.form("question_form"):
+    user_question = st.text_input(
+        "Ask about Branden's favorite things, experience, education, achievements, or how to navigate his portfolio."
+    )
+    submitted = st.form_submit_button("Get Answer")
 
 
 

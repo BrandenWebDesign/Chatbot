@@ -11,16 +11,8 @@ from openai import OpenAI
 api_key = os.getenv("OPENAI_API_KEY") or st.secrets["openai_api_key"]
 client = OpenAI(api_key=api_key)
 
-# Debug: check where the key is coming from
-def _mask(k):
-    return f"{k[:6]}…{k[-4:]}" if k else None
-
-st.write("From secrets:", "openai_api_key" in st.secrets)
-st.write("From env:", _mask(os.getenv("OPENAI_API_KEY")))
-
-# Toggle to show extra debug info in the UI if you want
+# Toggle for optional debug
 SHOW_DEBUG = False
-
 
 # =====================
 # OpenAI helper (with retries + model rotation)
@@ -30,8 +22,7 @@ def query_openai(prompt, max_retries=4):
     Calls OpenAI with retries on 429 rate limits, rotating models if needed.
     Returns a concise string. On persistent 429, returns a friendly message.
     """
-    # More patient backoff to avoid re-slamming a limit window
-    delays = [0, 2, 4, 8, 16]
+    delays = [0, 2, 4, 8, 16]  # exponential backoff
     last_err = None
 
     for attempt, delay in enumerate(delays[:max_retries + 1]):
@@ -39,9 +30,8 @@ def query_openai(prompt, max_retries=4):
             if delay:
                 _t.sleep(delay + random.uniform(0, 0.4))  # jitter
 
-            # Try a lighter model first to dodge model-specific throttle
+            # Prefer gpt-4o-mini, fallback to gpt-3.5-turbo
             candidate_models = ["gpt-4o-mini", "gpt-3.5-turbo"]
-            last_model_exc = None
             content = None
 
             for m in candidate_models:
@@ -62,15 +52,12 @@ def query_openai(prompt, max_retries=4):
                         temperature=0.7,
                     )
                     content = response.choices[0].message.content.strip()
-                    break  # success on this model
-                except Exception as mm_e:
-                    last_model_exc = mm_e
-                    # Try next model in rotation
-                    continue
+                    break
+                except Exception:
+                    continue  # try next model
 
             if content is None:
-                # None of the models worked in this attempt; raise last error to outer except
-                raise last_model_exc
+                raise last_err or Exception("No model succeeded.")
 
             # Cleanup text
             if content.startswith("As Branden,"):
@@ -87,39 +74,26 @@ def query_openai(prompt, max_retries=4):
             status = getattr(e, "status_code", None)
             name = e.__class__.__name__
 
-            # Optional: surface useful headers if present (often missing on hard 429s)
             if SHOW_DEBUG:
                 resp = getattr(e, "response", None)
                 if resp and hasattr(resp, "headers"):
-                    rem_req = resp.headers.get("x-ratelimit-remaining-requests")
-                    reset_req = resp.headers.get("x-ratelimit-reset-requests")
-                    rem_tokens = resp.headers.get("x-ratelimit-remaining-tokens")
-                    reset_tokens = resp.headers.get("x-ratelimit-reset-tokens")
-                    st.info(
-                        f"OpenAI error={name}, status={status}, "
-                        f"remaining_req={rem_req}, reset_req={reset_req}, "
-                        f"remaining_tokens={rem_tokens}, reset_tokens={reset_tokens}"
-                    )
+                    st.info(f"OpenAI error={name}, status={status}")
 
-            # Retry only on rate-limit flavored errors
             if status == 429 or "RateLimit" in name:
                 last_err = e
                 continue
 
-            # Any other error: show it (optionally) and re-raise
             if SHOW_DEBUG:
                 st.error(f"OpenAI error: {e}")
             raise
 
-    # All retries exhausted – friendly fallback
     return (
         "I’m getting rate-limited right now. Please try again in a moment. "
         "If this keeps happening, wait ~60 seconds between requests."
     )
 
-
 # =====================
-# Data: cache the big reference block (lighter reruns)
+# Data: cache the big reference block
 # =====================
 @st.cache_data
 def load_reference_text():
@@ -212,17 +186,14 @@ Special System Prompt for the AI App:
 - Keep responses concise and in first person, no more than 300 words.
     """
 
-
 with st.spinner("Loading..."):
     pdf_text = load_reference_text()
-
 
 # =====================
 # UI
 # =====================
 st.title("Ask Branden")
 
-# Prevent accidental double-sends and add a cooldown after limits
 if "busy" not in st.session_state:
     st.session_state.busy = False
 if "cooldown_until" not in st.session_state:
@@ -238,7 +209,7 @@ now = _t.time()
 if submitted:
     if now < st.session_state.cooldown_until:
         wait_left = int(st.session_state.cooldown_until - now)
-        st.toast(f"Cooling down after rate limit — try again in ~{wait_left}s.")
+        st.toast(f"Cooling down — try again in ~{wait_left}s.")
     elif not user_question:
         st.error("Please enter a question.")
     elif not st.session_state.busy:
@@ -255,7 +226,6 @@ if submitted:
                 answer = query_openai(prompt)
                 st.write("Branden: " + answer)
 
-                # If we hit the limit, set a short cooldown so we don't hammer
                 if "rate-limited right now" in answer.lower():
                     st.toast("Model is busy — try again in ~60s.")
                     st.session_state.cooldown_until = _t.time() + 60

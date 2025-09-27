@@ -173,8 +173,10 @@ with st.form("question_form"):
         )
         time.sleep(0.3)  # adjust timing for fade speed
 
-    # Spacer height ~ one line of text (tweak as needed)
-    msg.markdown("<div style='height:24px;'></div>", unsafe_allow_html=True)
+    msg.markdown(
+        "<div style='visibility:hidden; margin:0; font-weight:bold;'>✅ App loaded successfully!</div>",
+        unsafe_allow_html=True,
+    )
 
 
 

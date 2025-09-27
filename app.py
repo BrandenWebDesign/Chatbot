@@ -120,7 +120,7 @@ Hobbies and Interests
 • Favorite snack: Cheese doodles
 • Favorite bands: Deftones, The Beatles
 • Favorite songs: Too many favorites to list one
-• Favorite movies: Jaws, Goodfellas, The Master, Raging Bull, There Will Be Blood, The Godfather, Groundhog Day
+• Favorite movies: Jaws
 • Favorite TV show: The Sopranos
 • Favorite book: House of the Scorpion (Not Harry Potter)
 • Favorite sports: Football, skateboarding, boxing
@@ -140,28 +140,25 @@ Education
 Current Career (As of 2025)
 • Touro University, New York City — Adjunct Professor (September 2023 – Present)
   - Teaches undergraduate and graduate courses including Web Design, Animated Typography, and Foundations of the Web.
-• Frog Boyz — Special Effects Animator (November 2022 – Present)
-  - Creates special effects animation and title designs for the YouTube animated series.
+
 
 Past Work Experience
-• UPS, Parsippany, New Jersey — Seasonal Preload Supervisor (December 2024)
-  - Supervised loading operations during peak season.
+• Remote Control Enterprises AI Evaluation/Applied Machine Learning Support | May 2025 – Sept 2025
+  - Evaluated AI-generated content for a Big Five Tech company against quality, accuracy, and usability benchmarks.
+  - Provided applied machine learning support to improve large-scale model training and deployment to millions of users.
 • Static Media – TheDailyMeal.com — News Writer (October 2023 – February 2024)
   - Produced SEO-optimized culinary news articles.
 • Static Media – Grunge.com — News and Features Writer / Talent Acquisition (June 2020 – May 2021)
   - Wrote news and feature articles; recruited new writers.
-• SessionsX.com — Writer (May 2015 – September 2015)
-  - Created music-related content and artist biographies.
-• Paper Mill Playhouse, Millburn, New Jersey — Caller / Fundraiser / Salesman (March 2013 – July 2014)
-  - Sold subscription packages and raised funds for education programs.
-• UPS, Bound Brook, New Jersey — Package Handler / Seasonal Driver Helper (September 2012 – December 2012)
-  - Assisted in package handling and deliveries.
+
 
 Projects
+• A Madness in the Heir (Historical Fiction / Psychological Thriller) 
+  - Debut novel written between 2023-2025, secured representation with literary agent in Sept 2025.
 • Patient Hero: The ER in VR (September 2022 – April 2023) — Creator, Developer, Designer
   - Developed a VR hospital experience to help patients understand emergency care processes.
-• Frog Boyz on Troma Now! (November 2022 – January 2023) — Special Effects Animator, Concept Designer
-  - Contributed special effects, titles, and concept designs for a sketch show.
+• Frog Boyz — Special Effects Animator (November 2022 – December 2025)
+  - Created special effects animation and title designs for the YouTube animated series.
 • Center for Innovation, Rutgers University (May 2024) — Consultant – Web & Content Strategy
   - Provided consulting on web development and UX design for healthcare innovation.
 

@@ -25,28 +25,38 @@ def query_openai(prompt, max_retries=3):
             if delay:
                 time.sleep(delay + random.uniform(0, 0.4))  # jitter
             response = client.chat.completions.create(
-        model="gpt-3.5-turbo",
-        messages=[
-            {"role": "system",
-             "content": "You are Branden, responding in the first person as yourself. Please keep your answers concise and no more than 300 words."},
-            {"role": "user", "content": prompt}
-        ],
-        max_tokens=150,  # Lower token count to encourage brevity
-        temperature=0.7,
-    )
-    content = response.choices[0].message.content.strip()
+                model="gpt-3.5-turbo",
+                messages=[
+                    {"role": "system",
+                     "content": "You are Branden, responding in the first person as yourself. Keep answers ≤300 words."},
+                    {"role": "user", "content": prompt}
+                ],
+                max_tokens=150,
+                temperature=0.7,
+            )
 
-    # Ensure the response does not start with "As Branden"
-    if content.startswith("As Branden,"):
-        content = content[len("As Branden,"):].strip()
-    elif content.startswith("As Branden"):
-        content = content[len("As Branden"):].strip()
+            content = response.choices[0].message.content.strip()
 
-    # Ensure the response ends at a word boundary
-    while len(content) > 0 and content[-1] not in ['.', '!', '?']:
-        content = content[:-1]
+            if content.startswith("As Branden,"):
+                content = content[len("As Branden,"):].strip()
+            elif content.startswith("As Branden"):
+                content = content[len("As Branden"):].strip()
 
-    return content
+            while content and content[-1] not in ".!?":
+                content = content[:-1]
+
+            return content
+
+        except Exception as e:
+            status = getattr(e, "status_code", None)
+            name = e.__class__.__name__
+            if status == 429 or "RateLimit" in name:
+                last_err = e
+                continue
+            raise  # not a rate limit; surface it
+
+    return ("I’m getting rate-limited right now. Please try again in a moment. "
+            "If this keeps happening, wait ~60 seconds between requests.")
 
 
 

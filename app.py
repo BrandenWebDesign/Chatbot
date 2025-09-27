@@ -166,6 +166,7 @@ with st.form("question_form"):
 
     BANNER_STYLE = """
         margin:0;
+        margin-top:-10px;                /* move banner text up by 10px */
         height:auto;
         display:flex;
         align-items:center;

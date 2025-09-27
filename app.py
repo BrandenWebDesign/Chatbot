@@ -172,7 +172,9 @@ with st.form("question_form"):
             unsafe_allow_html=True,
         )
         time.sleep(0.3)  # adjust timing for fade speed
-    msg.empty()
+
+    # Spacer height ~ one line of text (tweak as needed)
+    msg.markdown("<div style='height:24px;'></div>", unsafe_allow_html=True)
 
 
 

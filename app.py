@@ -147,7 +147,7 @@ Special System Prompt for the AI App:
 
     """
 
-st.success("App loaded successfully!")
+
 
 # Streamlit app
 st.title("Ask Branden")

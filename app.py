@@ -148,6 +148,11 @@ Special System Prompt for the AI App:
 
     """
 
+
+
+# Streamlit app
+st.title("Ask Branden")
+
 msg = st.empty()
 for opacity in [1.0, 0.9, 0.8, 0.7, 0.6, 0.5, 0.4, 0.3, 0.2, 0.1]:
     msg.markdown(
@@ -157,8 +162,6 @@ for opacity in [1.0, 0.9, 0.8, 0.7, 0.6, 0.5, 0.4, 0.3, 0.2, 0.1]:
     time.sleep(0.3)  # adjust timing for fade speed
 msg.empty()
 
-# Streamlit app
-st.title("Ask Branden")
 
 # Use st.form to handle form submission
 with st.form("question_form"):

@@ -51,9 +51,24 @@ def query_openai(prompt, max_retries=3):
         except Exception as e:
             status = getattr(e, "status_code", None)
             name = e.__class__.__name__
+
+            # Try to log useful rate-limit info if available
+            resp = getattr(e, "response", None)
+            if resp and hasattr(resp, "headers"):
+                rem_req = resp.headers.get("x-ratelimit-remaining-requests")
+                reset_req = resp.headers.get("x-ratelimit-reset-requests")
+                rem_tokens = resp.headers.get("x-ratelimit-remaining-tokens")
+                reset_tokens = resp.headers.get("x-ratelimit-reset-tokens")
+                st.info(
+                    f"OpenAI error={name}, status={status}, "
+                    f"remaining_req={rem_req}, reset_req={reset_req}, "
+                    f"remaining_tokens={rem_tokens}, reset_tokens={reset_tokens}"
+                )
+
             if status == 429 or "RateLimit" in name:
                 last_err = e
-                continue
+                continue  # retry
+            st.error(f"OpenAI error: {e}")
             raise  # not a rate limit; surface it
 
     return ("I’m getting rate-limited right now. Please try again in a moment. "

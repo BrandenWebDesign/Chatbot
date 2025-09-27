@@ -151,8 +151,7 @@ Special System Prompt for the AI App:
 
 
 # Streamlit app
-st.title("Ask Branden")
-st.markdown("<div style='margin-top:-20px;'></div>", unsafe_allow_html=True)
+st.markdown("<h1 style='margin-bottom: 6px;'>Ask Branden</h1>", unsafe_allow_html=True)
 
 msg = st.empty()
 

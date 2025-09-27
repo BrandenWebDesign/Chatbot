@@ -9,6 +9,7 @@ api_key = os.getenv("OPENAI_API_KEY") or st.secrets["openai_api_key"]
 
 # Instantiate the OpenAI client
 client = OpenAI(api_key=api_key)
+st.write("Loaded key:", bool(api_key))
 
 
 # Function to query the OpenAI API with retries for rate limits

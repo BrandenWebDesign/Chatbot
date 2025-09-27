@@ -164,17 +164,27 @@ with st.form("question_form"):
     # Handle form submission with Enter key
     submitted = st.form_submit_button("Get Answer")
 
+    BANNER_STYLE = """
+        margin:0;
+        height:28px;
+        display:flex;
+        align-items:center;
+        font-weight:600;
+        font-size:1.1rem;   /* slightly larger, matches Streamlit base font */
+        font-family: "Source Sans Pro", sans-serif;
+    """
 
-
+    msg = st.empty()
     for opacity in [1.0, 0.9, 0.8, 0.7, 0.6, 0.5, 0.4, 0.3, 0.2, 0.1]:
         msg.markdown(
-            f"<div style='color:green; opacity:{opacity}; font-weight:bold;'>✅ App loaded successfully!</div>",
+            f"<div style='color:green; opacity:{opacity}; {BANNER_STYLE}'>✅ App loaded successfully!</div>",
             unsafe_allow_html=True,
         )
-        time.sleep(0.3)  # adjust timing for fade speed
+        time.sleep(0.3)
 
+    # Keep layout height consistent after fade
     msg.markdown(
-        "<div style='visibility:hidden; margin:0; font-weight:bold;'>✅ App loaded successfully!</div>",
+        f"<div style='opacity:0; {BANNER_STYLE}'>✅ App loaded successfully!</div>",
         unsafe_allow_html=True,
     )
 

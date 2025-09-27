@@ -154,13 +154,6 @@ Special System Prompt for the AI App:
 st.title("Ask Branden")
 
 msg = st.empty()
-for opacity in [1.0, 0.9, 0.8, 0.7, 0.6, 0.5, 0.4, 0.3, 0.2, 0.1]:
-    msg.markdown(
-        f"<div style='color:green; opacity:{opacity}; font-weight:bold;'>✅ App loaded successfully!</div>",
-        unsafe_allow_html=True,
-    )
-    time.sleep(0.3)  # adjust timing for fade speed
-msg.empty()
 
 
 # Use st.form to handle form submission
@@ -170,6 +163,18 @@ with st.form("question_form"):
 
     # Handle form submission with Enter key
     submitted = st.form_submit_button("Get Answer")
+
+
+
+    for opacity in [1.0, 0.9, 0.8, 0.7, 0.6, 0.5, 0.4, 0.3, 0.2, 0.1]:
+        msg.markdown(
+            f"<div style='color:green; opacity:{opacity}; font-weight:bold;'>✅ App loaded successfully!</div>",
+            unsafe_allow_html=True,
+        )
+        time.sleep(0.3)  # adjust timing for fade speed
+    msg.empty()
+
+
 
     if submitted:
         if user_question:

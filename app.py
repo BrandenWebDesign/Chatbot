@@ -170,7 +170,7 @@ with st.form("question_form"):
         display:flex;
         align-items:center;
         font-weight:600;
-        font-size:2rem;   /* slightly larger, matches Streamlit base font */
+        font-size:1rem;   /* slightly larger, matches Streamlit base font */
         font-family: "Source Sans Pro", sans-serif;
     """
 
